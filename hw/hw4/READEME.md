@@ -2,19 +2,18 @@
 
 純 Python 實作的迷你 GPT，無第三方深度學習套件依賴。
 
-## 目錄結構
-- `microgpt.py` — 主程式（從頭實作 GPT）
-- `input.txt` — 訓練資料（32000+ 英文名字）
-- `micro_gpt_hw4/` — 額外參考檔案
+microGPT 大概分成幾個部分：
 
-## 實作內容
-- 字元級 Tokenizer（含 BOS token）
-- Scalar-level Autograd（反向傳播自動求導）
-- Transformer 架構：RMSNorm, Multi-Head Attention, MLP, 殘差連接
-- Adam 優化器 + 學習率衰減
-- 生成推論（含 temperature 控制）
+1. 讀取資料集
+2. Tokenizer，把文字轉成數字
+3. Embedding，把 token 變成向量
+4. Transformer block
+5. Attention 注意力機制
+6. MLP 前饋網路
+7. Loss 計算
+8. Adam 更新參數
+9. 最後生成文字
 
-## 超參數
-- n_layer=1, n_embd=16, block_size=16, n_head=4
-- 學習率 0.01, Adam (β1=0.85, β2=0.99)
-- 訓練 1000 步
+GPT 的本質是「根據前面的 token 預測下一個 token」。
+訓練時，模型會一直做：
+預測下一個 token -> 計算 loss -> backward -> Adam 更新參數
